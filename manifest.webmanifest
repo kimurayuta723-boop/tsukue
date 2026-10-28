@@ -1,0 +1,20 @@
+{
+  "name": "つくえ",
+  "short_name": "つくえ",
+  "description": "片付けなくていいメモ帳。触った紙は手前に残り、触らない紙は沈んでいく。",
+  "lang": "ja",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#c79d6e",
+  "theme_color": "#c79d6e",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

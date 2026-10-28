@@ -1,0 +1,352 @@
+@property --age { syntax: '<number>'; inherits: true; initial-value: 0; }
+@property --bs { syntax: '<number>'; inherits: true; initial-value: 1; }
+
+/* Layout: one fixed desk mat fills the screen; papers lie on it. Chrome is only a label tape, a clock, a memo pad and a wastebasket at the edges. */
+:root {
+  --desk: #c79d6e;          /* oak top */
+  --desk-deep: #9c6f45;
+  --chrome: #f4f2eb;
+  --chrome-ink: #252e2a;
+  --chrome-soft: #5d6862;
+  --chrome-line: rgba(37, 46, 42, .13);
+  --accent: #2b45a6;        /* ballpoint blue */
+  --accent-ink: #ffffff;
+  --shadow: rgba(22, 34, 27, .40);
+  --backdrop: rgba(30, 38, 34, .40);
+  --glow: radial-gradient(70% 55% at 4% -4%, rgba(255, 248, 230, .4), rgba(255, 248, 230, .1) 45%, transparent 75%);
+  --vig: radial-gradient(125% 95% at 46% 44%, transparent 58%, rgba(70, 40, 14, .07) 80%, rgba(50, 28, 10, .2) 100%);
+
+  /* paper stock: identical in both themes, papers are physical objects */
+  --paper: #fbfaf5;
+  --ink: #272b34;
+  --ink-pencil: #3c3e44;   /* graphite */
+  --ink-pen: #26326a;      /* blue-black ballpoint */
+  --ink-marker: #1d1b18;   /* felt-tip marker */
+  --print: #8a9bbd;
+  --rule: #b9cbe0;
+  --margin: #e3a19e;
+  --receipt: #f6f5f0;
+  --receipt-ink: #3d3f42;
+  --sticky-y: #f5df72;
+  --sticky-p: #f3b8b0;
+  --sticky-m: #bfe1cc;
+  --tape: #1f2c48;
+  --tape-ink: #f3efe2;
+  --binding: #b4473c;
+  --washi: rgba(240, 230, 204, .93);
+  --washi-ink: #4a3925;
+  --bin-out: #d4cfc6;
+  --bin-rim: #e7eae4;
+  --bin-in: #5b5650;
+  --grain: none;
+  --ux: .35;              /* direction shadows fall, set from the light in script */
+  --uy: .9;
+
+  /* each paper is written with a different tool, so each gets its own hand */
+  --f-pencil: "Klee One", "Hiragino Mincho ProN", "Yu Mincho", serif;          /* notebook: pencil */
+  --f-pen: "Yomogi", "Klee One", "Hiragino Maru Gothic ProN", sans-serif;      /* memo pad: ballpoint */
+  --f-marker: "Zen Kurenaido", "Klee One", "Hiragino Maru Gothic ProN", sans-serif; /* sticky: felt-tip */
+  --f-dot: "DotGothic16", "Osaka-Mono", "MS Gothic", monospace;                 /* receipt: thermal print */
+  --f-print: "Zen Kaku Gothic Antique", "Hiragino Sans", "Yu Gothic", sans-serif; /* printed stationery labels */
+  --f-ui: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Yu Gothic", system-ui, sans-serif; /* app chrome, matches the rounded A5 icon */
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --desk: #5a3f2b; --desk-deep: #2f2016;
+    --chrome: #2a302d; --chrome-ink: #ece8dc; --chrome-soft: #a9b1ab; --chrome-line: rgba(236, 232, 220, .13);
+    --accent: #93a6ff; --accent-ink: #121833;
+    --shadow: rgba(0, 0, 0, .62); --backdrop: rgba(6, 9, 7, .55);
+    --glow: radial-gradient(34% 24% at 20% 7%, rgba(255, 214, 160, .30), transparent 72%), radial-gradient(90% 70% at 20% 7%, rgba(255, 170, 90, .10), transparent 70%); --vig: radial-gradient(115% 95% at 30% 22%, transparent 40%, rgba(0, 0, 0, .22) 72%, rgba(0, 0, 0, .5) 100%);
+    --bin-out: #4a534e; --bin-rim: #646e68; --bin-in: #1c211e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --desk: #5a3f2b; --desk-deep: #2f2016;
+  --chrome: #2a302d; --chrome-ink: #ece8dc; --chrome-soft: #a9b1ab; --chrome-line: rgba(236, 232, 220, .13);
+  --accent: #93a6ff; --accent-ink: #121833;
+  --shadow: rgba(0, 0, 0, .62); --backdrop: rgba(6, 9, 7, .55);
+  --glow: radial-gradient(34% 24% at 20% 7%, rgba(255, 214, 160, .30), transparent 72%), radial-gradient(90% 70% at 20% 7%, rgba(255, 170, 90, .10), transparent 70%); --vig: radial-gradient(115% 95% at 30% 22%, transparent 40%, rgba(0, 0, 0, .22) 72%, rgba(0, 0, 0, .5) 100%);
+  --bin-out: #4a534e; --bin-rim: #646e68; --bin-in: #1c211e;
+  color-scheme: dark;
+}
+
+[hidden] { display: none !important; }
+/* lens layers for daylight and for the lamp; script sets their opacity as the day turns */
+:root {
+  --glow-day: radial-gradient(70% 55% at 4% -4%, rgba(255, 248, 230, .4), rgba(255, 248, 230, .1) 45%, transparent 75%);
+  --glow-lamp: radial-gradient(34% 24% at 20% 7%, rgba(255, 214, 160, .30), transparent 72%), radial-gradient(90% 70% at 20% 7%, rgba(255, 170, 90, .10), transparent 70%);
+  --vig-day: radial-gradient(125% 95% at 46% 44%, transparent 58%, rgba(70, 40, 14, .07) 80%, rgba(50, 28, 10, .2) 100%);
+  --vig-night: radial-gradient(115% 95% at 30% 22%, transparent 40%, rgba(0, 0, 0, .22) 72%, rgba(0, 0, 0, .5) 100%);
+}
+html, body { height: 100%; }
+body {
+  background: var(--desk); color: var(--chrome-ink);
+  font-family: var(--f-ui);
+  overflow: hidden; overscroll-behavior: none; touch-action: none;
+  -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+button { font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* ---------- desk ---------- */
+#desk { position: fixed; inset: 0; z-index: 0; }
+#mat { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#layer { position: absolute; inset: 0; z-index: 1; overflow: hidden; }
+#light { display: none; }
+
+/* lens: the desk is seen through a camera above it */
+/* no wrapper stacking context, so each layer blends with the desk itself */
+#lens { display: contents; }
+#lens > * { position: fixed; inset: 0; z-index: 4; pointer-events: none; }
+#lens > canvas { width: 100%; height: 100%; display: block; mix-blend-mode: screen; }
+#lens > #roomshade { mix-blend-mode: multiply; }
+/* passing clouds dim and cool the room a little */
+.l-cloud { background: rgba(60, 74, 100, calc((1 - var(--sun, 1)) * .3)); mix-blend-mode: multiply; }
+/* refocus: when a sheet is picked up, focus follows it and the desk drops back */
+.l-focus { -webkit-backdrop-filter: blur(1.7px) saturate(.92); backdrop-filter: blur(1.7px) saturate(.92); opacity: 0; visibility: hidden; transition: opacity .5s ease, visibility 0s .5s; }
+body.lifting .l-focus { opacity: 1; visibility: visible; transition: opacity .38s cubic-bezier(.3, .7, .3, 1) .04s, visibility 0s; }
+/* field curvature: the plane of focus bends away toward the corners */
+.l-dof {
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  -webkit-mask-image: radial-gradient(ellipse 78% 68% at 50% 46%, transparent 56%, rgba(0, 0, 0, .55) 80%, #000 100%);
+          mask-image: radial-gradient(ellipse 78% 68% at 50% 46%, transparent 56%, rgba(0, 0, 0, .55) 80%, #000 100%);
+}
+.l-glow { background: var(--glow-day); mix-blend-mode: screen; }
+.l-lamp { background: var(--glow-lamp); mix-blend-mode: screen; opacity: 0; }
+.l-vig { background: var(--vig-day); mix-blend-mode: multiply; }
+.l-vign { background: var(--vig-night); mix-blend-mode: multiply; opacity: 0; }
+.l-grain { background: var(--film, none); background-size: 150px; mix-blend-mode: soft-light; opacity: .6; }
+
+/* shadow on the desk, projected per corner from the light */
+.paper { --cg: transparent; --cpx: 100%; --cpy: 100%; }
+.shade {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%; transform-origin: 0 0; pointer-events: none;
+  opacity: calc(var(--sa, .5) * (.4 + .6 * var(--sun, 1)));
+  -webkit-mask-image: radial-gradient(85% 75% at var(--cpx) var(--cpy), rgba(0, 0, 0, .4), #000 80%);
+          mask-image: radial-gradient(85% 75% at var(--cpx) var(--cpy), rgba(0, 0, 0, .4), #000 80%);
+}
+.shade i { position: absolute; inset: 0; background: rgb(var(--shc, 44, 24, 8)); }
+.curl { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(70% 52% at var(--cpx) var(--cpy), var(--cg), transparent); }
+@media (prefers-reduced-motion: reduce) { .l-focus, body.lifting .l-focus { transition: none; } }
+#hand {
+  position: absolute; left: 0; top: 0; z-index: 3; width: 150px; height: 150px; margin: -75px 0 0 -75px;
+  border-radius: 50%; pointer-events: none; opacity: 0; transition: opacity .25s;
+  background: radial-gradient(circle, rgba(0, 0, 0, .16), rgba(0, 0, 0, .05) 45%, transparent 68%);
+}
+#hand.on { opacity: 1; }
+
+/* ---------- paper ---------- */
+.paper { position: absolute; left: 0; top: 0; transform-origin: 50% 50%; touch-action: none; cursor: grab; outline: none; transition: --age 1.2s ease; }
+.paper:focus-visible .sheet { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* height above the desk (--hs) and the cast shadow are computed in script from the light position */
+.lift { width: 100%; height: 100%; transform: scale(calc((1 - min(var(--age), 1) * .045) * var(--hs, 1) * var(--bs))); }
+.paper { --bs: 1; }
+.paper.over { --bs: .46; }
+#air .paper { transition: --bs .22s cubic-bezier(.3, 1.3, .5, 1); }
+.held { cursor: grabbing; }
+.lit {
+  position: absolute; inset: 0; pointer-events: none; mix-blend-mode: multiply;
+  background:
+    linear-gradient(var(--ld, 160deg), rgba(255, 255, 255, 0) 30%, rgba(70, 44, 20, var(--far, .06))),
+    linear-gradient(rgba(255, 204, 146, var(--warm, 0)), rgba(255, 204, 146, var(--warm, 0))),
+    linear-gradient(rgba(0, 0, 0, var(--shade, 0)), rgba(0, 0, 0, var(--shade, 0)));
+}
+#air { position: fixed; inset: 0; z-index: 6; pointer-events: none; }
+#air .paper { pointer-events: auto; }
+.sheet { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--paper); color: var(--ink); }
+.tex { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+.ink { transform: rotate(var(--ir, 0deg)); transform-origin: 0 0; }
+.hd, .rc-hd, .rc-ft, .nt-hd { rotate: var(--pr, 0deg); }
+.age {
+  position: absolute; inset: 0; pointer-events: none; mix-blend-mode: multiply;
+  background: radial-gradient(115% 110% at 45% 40%, transparent 35%, rgba(130, 92, 34, .45)), rgba(201, 166, 96, .42);
+  opacity: calc(min(var(--age), 1.15) * .85);
+}
+.ink {
+  position: absolute; font-family: var(--f-pencil); font-weight: 600; color: var(--ink-pencil);
+  font-size: calc(var(--u) * 7.4); line-height: 1.55; white-space: pre-wrap; word-break: break-all; overflow: hidden;
+  opacity: calc(1 - min(var(--age), 1) * .38);
+  -webkit-mask-image: linear-gradient(#000 80%, transparent); mask-image: linear-gradient(#000 80%, transparent);
+}
+textarea.ink {
+  border: 0; padding: 0; margin: 0; resize: none; background: transparent; color: inherit; outline: none;
+  -webkit-mask-image: none; mask-image: none; overflow: auto; touch-action: auto;
+  -webkit-user-select: text; user-select: text; opacity: 1;
+}
+textarea.ink::placeholder { color: currentColor; opacity: .32; }
+
+/* memo pad sheet, torn along the perforation */
+.t-memo .sheet {
+  -webkit-mask: radial-gradient(circle at 4px 0, transparent 1.7px, #000 2.2px) top left / 8px 6px repeat-x, linear-gradient(#000, #000) 0 5.5px / 100% calc(100% - 5.5px) no-repeat;
+          mask: radial-gradient(circle at 4px 0, transparent 1.7px, #000 2.2px) top left / 8px 6px repeat-x, linear-gradient(#000, #000) 0 5.5px / 100% calc(100% - 5.5px) no-repeat;
+}
+.t-memo .hd {
+  position: absolute; left: calc(var(--u) * 8); right: calc(var(--u) * 8); top: calc(var(--u) * 8);
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-bottom: calc(var(--u) * 1.6); border-bottom: 1px solid var(--print); color: var(--print);
+  font: 700 calc(var(--u) * 4.2) var(--f-print); letter-spacing: .3em;
+}
+.t-memo .hd span:last-child { font-family: var(--f-pen); font-weight: 400; letter-spacing: .04em; font-size: calc(var(--u) * 5); color: var(--ink-pen); opacity: .8; }
+.t-memo .ink { left: calc(var(--u) * 8); right: calc(var(--u) * 7); top: calc(var(--u) * 19); bottom: calc(var(--u) * 6); font-family: var(--f-pen); font-weight: 400; font-size: calc(var(--u) * 8); line-height: 1.5; color: var(--ink-pen); }
+
+/* sticky note */
+.t-sticky .sheet { background: var(--sticky-y); }
+.t-sticky.c-p .sheet { background: var(--sticky-p); }
+.t-sticky.c-m .sheet { background: var(--sticky-m); }
+.t-sticky .ink { left: calc(var(--u) * 9); right: calc(var(--u) * 8); top: calc(var(--u) * 21); bottom: calc(var(--u) * 6); font-family: var(--f-marker); font-weight: 400; font-size: calc(var(--u) * 9.4); line-height: 1.38; color: var(--ink-marker); -webkit-text-stroke: calc(var(--u) * .18) var(--ink-marker); }
+
+/* thermal receipt */
+.t-receipt .sheet { background: var(--receipt); color: var(--receipt-ink); }
+.rc-hd { position: absolute; left: 0; right: 0; top: calc(var(--u) * 9); text-align: center; font: calc(var(--u) * 7.4) / 1.3 var(--f-dot); letter-spacing: .1em; }
+.rc-hd small { display: block; margin-top: calc(var(--u) * 3); padding-bottom: calc(var(--u) * 3.5); margin-inline: calc(var(--u) * 8); border-bottom: 1px dashed currentColor; font-size: calc(var(--u) * 5); letter-spacing: .04em; line-height: 1.5; opacity: .8; }
+.t-receipt .ink { left: calc(var(--u) * 10); right: calc(var(--u) * 9); top: calc(var(--u) * 46); bottom: calc(var(--u) * 30); font-family: var(--f-dot); font-weight: 400; color: var(--receipt-ink); font-size: calc(var(--u) * 7.2); line-height: 1.6; }
+.rc-ft { position: absolute; left: calc(var(--u) * 8); right: calc(var(--u) * 8); bottom: calc(var(--u) * 9); padding-top: calc(var(--u) * 3.5); border-top: 1px dashed currentColor; text-align: center; font: calc(var(--u) * 5) / 1.55 var(--f-dot); opacity: .75; }
+
+/* notebook page, torn out on the left */
+.t-note .sheet { background: var(--paper); }
+.nt-hd { position: absolute; right: calc(var(--u) * 7); top: calc(var(--u) * 5); font: 500 calc(var(--u) * 4.2) var(--f-print); color: var(--print); letter-spacing: .18em; }
+.nt-hd u { font-family: var(--f-pencil); color: var(--ink-pencil); text-decoration-color: var(--print); text-underline-offset: 3px; letter-spacing: .04em; padding-inline: .5em; opacity: .75; }
+.t-note .ink { transform-origin: calc(var(--u) * -20) calc(var(--u) * -1.2); left: calc(var(--u) * 20); right: calc(var(--u) * 6); top: calc(var(--u) * 17.2); bottom: calc(var(--u) * 4); font-size: calc(var(--u) * 6.5); line-height: calc(var(--u) * 9.4); }
+
+.crease { position: absolute; inset: 0; opacity: 0; pointer-events: none; mix-blend-mode: multiply;
+  background: repeating-conic-gradient(from 12deg at 46% 54%, rgba(0, 0, 0, .14) 0 7deg, rgba(255, 255, 255, .2) 7deg 15deg, rgba(0, 0, 0, .06) 15deg 26deg); }
+
+/* ---------- chrome ---------- */
+.brand {
+  position: fixed; z-index: 5;
+  top: calc(env(safe-area-inset-top, 0px) + 12px); left: max(16px, env(safe-area-inset-left, 0px));
+  display: flex; align-items: center; pointer-events: none;
+  filter: drop-shadow(calc(var(--ux) * 2.5px) calc(var(--uy) * 3.5px) 3px var(--shadow));
+}
+/* the app icon lies on the desk, held down by a strip of masking tape that carries the name */
+.brand .mark { width: 42px; height: 42px; display: block; transform: rotate(-5deg); flex: none; filter: drop-shadow(calc(var(--ux) * 2px) calc(var(--uy) * 3px) 2px rgba(40, 20, 6, .35)); }
+.brand .tape {
+  position: relative; margin-left: -5px; padding: 6px 15px 6px 16px;
+  background: linear-gradient(rgba(255, 255, 255, .2), rgba(255, 255, 255, 0) 45%, rgba(80, 60, 30, .05)), var(--washi);
+  color: var(--washi-ink); font: 700 14px var(--f-ui); letter-spacing: .34em; line-height: 1.2;
+  transform: rotate(2.5deg);
+  clip-path: polygon(2% 0, 98% 0, 100% 16%, 97% 34%, 100% 52%, 97.5% 71%, 100% 88%, 98.5% 100%, 2% 100%, 0 84%, 2.5% 66%, 0 47%, 3% 28%, 0 10%);
+}
+.brand .tape::after { content: ""; position: absolute; inset: 0; background: var(--grain); background-size: 120px; mix-blend-mode: multiply; opacity: .55; }
+.clock {
+  position: fixed; z-index: 5;
+  top: calc(env(safe-area-inset-top, 0px) + 12px); right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; align-items: center; gap: 7px; padding: 8px 12px 8px 10px; border: 0; border-radius: 999px;
+  background: var(--chrome); color: var(--chrome-ink); font: 700 14px var(--f-ui); font-variant-numeric: tabular-nums;
+  box-shadow: 0 1px 0 var(--chrome-line), calc(var(--ux) * 9px) calc(var(--uy) * 9px) 18px -10px var(--shadow);
+}
+.clock svg { width: 16px; height: 16px; }
+.clock .ff { font-size: 12px; padding: 2px 7px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); }
+
+.pad {
+  position: fixed; z-index: 5; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 22px);
+  width: 138px; height: 66px; margin-left: -69px; border: 0; padding: 0; background: none;
+  transition: transform .15s;
+}
+.pad:active { transform: translateY(2px) scale(.98); }
+.pad .block {
+  position: absolute; inset: 0; background: var(--paper); color: var(--ink);
+  display: grid; place-items: center; font: 400 17px var(--f-marker); letter-spacing: .1em; -webkit-text-stroke: .3px currentColor;
+  box-shadow: 0 2px 0 #e2dfd5, 0 3px 0 #fbfaf5, 0 5px 0 #e2dfd5, 0 6px 0 #fbfaf5, 0 8px 0 #d9d6cb, calc(var(--ux) * 14px) calc(var(--uy) * 16px) 18px -6px var(--shadow);
+  border-top: 7px solid var(--binding);
+}
+.pad .block::after { content: ""; position: absolute; inset: 0; background: var(--grain); background-size: 180px; mix-blend-mode: multiply; opacity: .7; }
+
+.bin {
+  position: fixed; z-index: 5; right: max(18px, env(safe-area-inset-right, 0px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 22px);
+  width: 66px; height: 66px; border: 0; padding: 0; border-radius: 50%;
+  background: radial-gradient(circle, var(--bin-in) 0 56%, var(--bin-rim) 58% 68%, var(--bin-out) 70% 100%);
+  box-shadow: calc(var(--ux) * 11px) calc(var(--uy) * 11px) 18px -8px var(--shadow), inset calc(var(--ux) * -3px) calc(var(--uy) * -3px) 0 rgba(0, 0, 0, .12);
+  transition: transform .22s cubic-bezier(.3, 1.4, .5, 1), box-shadow .22s;
+}
+.bin.armed { transform: scale(1.06); }
+.bin.ready { transform: scale(1.2); box-shadow: 0 0 0 3px var(--accent), calc(var(--ux) * 14px) calc(var(--uy) * 14px) 22px -8px var(--shadow); }
+.bin-tip {
+  position: fixed; z-index: 7; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 104px);
+  padding: 6px 11px; border-radius: 999px; background: var(--accent); color: var(--accent-ink);
+  font: 700 12px var(--f-ui); pointer-events: none; opacity: 0; transform: translateY(6px); transition: opacity .18s, transform .18s;
+}
+.bin-tip.on { opacity: 1; transform: none; }
+.bin .ball { position: absolute; width: 15px; height: 15px; border-radius: 46% 54% 50% 48%; background: radial-gradient(circle at 35% 30%, #fffef8, #d9d5c8); box-shadow: 0 1px 2px rgba(0, 0, 0, .4); }
+.bin .ball::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: repeating-conic-gradient(rgba(0, 0, 0, .12) 0 12deg, transparent 12deg 40deg); }
+
+/* ---------- zoom (holding a paper) ---------- */
+#zoom {
+  position: fixed; inset: 0; z-index: 20;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 62px);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+#zoom .back { position: absolute; inset: 0; background: var(--backdrop); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); opacity: 0; transition: opacity .3s; }
+#zoom.on .back { opacity: 1; }
+#zoom .ui { position: relative; opacity: 0; transform: translateY(8px); transition: opacity .25s .08s, transform .3s .08s; }
+#zoom.on .ui { opacity: 1; transform: none; }
+#slot { position: relative; flex: none; }
+.zp { position: absolute; inset: 0; width: 100%; height: 100%; cursor: auto; touch-action: auto; }
+.zp .lift { --sh: 20; transform: none; }
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 100%; }
+.chip {
+  display: flex; align-items: center; gap: 7px; padding: 7px 12px 7px 9px; border: 0; border-radius: 999px;
+  background: var(--chrome); color: var(--chrome-ink); font: 500 13px var(--f-ui);
+  box-shadow: 0 6px 14px -10px var(--shadow);
+}
+.chip[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent); }
+.sw { display: block; width: 13px; height: 16px; background: var(--paper); box-shadow: 0 1px 2px rgba(0, 0, 0, .35); }
+.sw-sticky { width: 15px; height: 15px; background: var(--sticky-y); }
+.sw-sticky.c-p { background: var(--sticky-p); } .sw-sticky.c-m { background: var(--sticky-m); }
+.sw-receipt { width: 9px; height: 18px; background: var(--receipt); }
+.sw-note { width: 14px; background: repeating-linear-gradient(to bottom, var(--paper) 0 3px, var(--rule) 3px 4px); }
+.acts { display: flex; gap: 10px; }
+.btn {
+  border: 0; border-radius: 12px; padding: 12px 20px; font: 700 15px var(--f-ui);
+  background: var(--chrome); color: var(--chrome-ink); box-shadow: 0 1px 0 var(--chrome-line), 0 8px 18px -10px var(--shadow);
+}
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.quiet { background: transparent; box-shadow: inset 0 0 0 1.5px var(--chrome-line); color: var(--chrome-ink); }
+#zoom .btn.quiet { background: var(--chrome); box-shadow: 0 8px 18px -10px var(--shadow); }
+
+/* ---------- bottom sheet ---------- */
+#scrim { position: fixed; inset: 0; z-index: 29; background: var(--backdrop); opacity: 0; pointer-events: none; transition: opacity .25s; }
+#scrim.on { opacity: 1; pointer-events: auto; }
+#panel {
+  position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; max-height: 82%; overflow: auto; touch-action: pan-y;
+  background: var(--chrome); color: var(--chrome-ink); border-radius: 20px 20px 0 0;
+  padding-block: 22px calc(env(safe-area-inset-bottom, 0px) + 24px);
+  padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px));
+  box-shadow: 0 -12px 30px -16px var(--shadow);
+  transform: translateY(105%); transition: transform .34s cubic-bezier(.2, .8, .2, 1);
+}
+#panel.on { transform: none; }
+#panel .inner { max-width: 520px; margin: 0 auto; display: grid; gap: 14px; }
+#panel h2 { margin: 0; font: 700 18px var(--f-ui); display: flex; justify-content: space-between; align-items: center; text-wrap: balance; }
+#panel h3 { margin: 10px 0 0; font: 700 14px var(--f-ui); }
+.hour { display: flex; align-items: center; gap: 12px; }
+.hour input { flex: 1; min-width: 0; accent-color: var(--accent); touch-action: manipulation; }
+.hour output { font: 700 15px var(--f-ui); font-variant-numeric: tabular-nums; min-width: 3.2em; text-align: right; }
+#panel p { margin: 0; font-size: 13px; line-height: 1.7; color: var(--chrome-soft); }
+.x { border: 0; background: var(--chrome-line); width: 32px; height: 32px; border-radius: 50%; font-size: 18px; line-height: 1; }
+.seg { display: flex; padding: 3px; border-radius: 12px; background: var(--chrome-line); }
+.seg button { flex: 1; border: 0; background: transparent; padding: 9px 4px; border-radius: 9px; font: 700 14px var(--f-ui); color: var(--chrome-soft); }
+.seg button[aria-pressed="true"] { background: var(--chrome); color: var(--chrome-ink); box-shadow: 0 2px 6px -2px var(--shadow); }
+.row { display: flex; flex-wrap: wrap; gap: 8px; }
+.row .btn { padding: 10px 16px; font-size: 14px; }
+.today { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font: 700 15px var(--f-ui); font-variant-numeric: tabular-nums; }
+.today .ff { font-size: 12px; padding: 3px 8px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); }
+#panel .warn { color: var(--binding); font-weight: 700; }
+.trash-list { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.trash-list li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--chrome-line); }
+.trash-list .sw { transform: rotate(-6deg); }
+.trash-list .t { min-width: 0; }
+.trash-list .t b { display: block; font: 400 15px var(--f-pen); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.trash-list .t span { font-size: 12px; color: var(--chrome-soft); font-variant-numeric: tabular-nums; }
+.trash-list .btn { padding: 8px 14px; font-size: 13px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .paper, .lift, #zoom .ui, #panel, #scrim, #zoom .back { transition: none; }
+}
+
+/* standalone app */
+html, body { margin: 0; } body { -webkit-touch-callout: none; }

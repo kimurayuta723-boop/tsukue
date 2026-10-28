@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>つくえ</title>
+<meta name="description" content="片付けなくていいメモ帳。触った紙は手前に残り、触らない紙は沈んでいく。">
+<meta name="theme-color" content="#c79d6e" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#2b1d13" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="つくえ">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Yomogi&family=Zen+Kurenaido&family=Zen+Kaku+Gothic+Antique:wght@500;700&family=Zen+Maru+Gothic:wght@500;700&family=DotGothic16&display=swap">
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<div id="desk">
+  <canvas id="mat" aria-hidden="true"></canvas>
+  <div id="layer" aria-label="机の上のメモ"></div>
+  <div id="light"></div>
+  <div id="hand"></div>
+</div>
+
+<div id="lens" aria-hidden="true"><canvas id="roomshade"></canvas><canvas id="sunlight"></canvas><div class="l-cloud"></div><div class="l-focus"></div><div class="l-dof"></div><canvas id="motes"></canvas><div class="l-glow"></div><div class="l-lamp"></div><div class="l-vig"></div><div class="l-vign"></div><div class="l-grain"></div></div>
+<div class="brand" aria-hidden="true">
+  <svg class="mark" viewBox="0 0 240 240">
+    <defs><clipPath id="bmR"><rect width="240" height="240" rx="54"/></clipPath></defs>
+    <g clip-path="url(#bmR)">
+      <rect width="240" height="240" fill="#cf9a5f"/>
+      <path d="M0 0 H240 V112 C170 120 90 104 0 116 Z" fill="#d8a76e"/>
+      <path d="M0 148 C80 140 160 156 240 146" fill="none" stroke="#a9733e" stroke-width="5" stroke-linecap="round"/>
+      <g transform="rotate(-9 112 130)">
+        <rect x="69" y="71" width="104" height="128" fill="#8c5a2a"/>
+        <rect x="60" y="62" width="104" height="128" fill="#fbfaf4"/>
+        <rect x="86" y="88" width="56" height="10" rx="5" fill="#2f2a20"/>
+        <rect x="86" y="110" width="38" height="10" rx="5" fill="#2f2a20"/>
+      </g>
+      <g transform="rotate(9 154 152)">
+        <rect x="123" y="119" width="80" height="80" fill="#8c5a2a"/>
+        <rect x="114" y="110" width="80" height="80" fill="#f2c94c"/>
+        <rect x="114" y="110" width="80" height="15" fill="#e3b93e"/>
+      </g>
+    </g>
+    <rect x="4" y="4" width="232" height="232" rx="50" fill="none" stroke="#fff6e4" stroke-opacity=".45" stroke-width="8"/>
+  </svg>
+  <span class="tape">つくえ</span>
+</div>
+<button class="clock" id="clock" aria-label="机の時計と沈み方の設定">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.6V8l2.3 1.6" stroke-linecap="round"/></svg>
+  <span id="clockLabel">--/--</span>
+</button>
+<button class="pad" id="pad" aria-label="新しい紙を取る"><span class="block">紙を取る</span></button>
+<button class="bin" id="bin" aria-label="ゴミ箱を開く"></button>
+<div id="air"></div>
+<div class="bin-tip" id="binTip" aria-hidden="true">離すと捨てる</div>
+
+<div id="zoom" hidden>
+  <div class="back" id="zback"></div>
+  <div class="chips ui" id="chips" role="group" aria-label="紙の種類">
+    <button class="chip" data-type="memo"><i class="sw"></i>メモ用紙</button>
+    <button class="chip" data-type="sticky" title="もう一度押すと色が変わります"><i class="sw sw-sticky" id="swSticky"></i>付箋</button>
+    <button class="chip" data-type="receipt"><i class="sw sw-receipt"></i>レシート</button>
+    <button class="chip" data-type="note"><i class="sw sw-note"></i>ノート</button>
+  </div>
+  <div id="slot"></div>
+  <div class="acts ui">
+    <button class="btn quiet" id="zdel">捨てる</button>
+    <button class="btn primary" id="zok">机に戻す</button>
+  </div>
+</div>
+
+<div id="scrim"></div>
+<div id="panel" role="dialog" aria-modal="true" aria-label="パネル"><div class="inner" id="panelInner"></div></div>
+
+<script src="./js/app.js"></script>
+</body>
+</html>
